@@ -19,7 +19,7 @@ export class TasksService {
         });
     }
 
-    updateTask(id: number, title: string, description?: string, completed?: boolean) {
+    updateTask(id: number, title?: string, description?: string, completed?: boolean) {
         return this.prisma.task.update({
             where: { id },
             data: { title, description, completed }
@@ -32,11 +32,12 @@ export class TasksService {
         });
     }
 
-    findTasks(title?: string, description?: string) {
+    findTasks(title?: string, description?: string, completed?: boolean) {
         const data = this.prisma.task.findMany({
             where: {
                 title: title ? { contains: title } : undefined,
                 description: description ? { contains: description } : undefined,
+                completed,
             }
         });
         return data;
