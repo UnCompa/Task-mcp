@@ -2,7 +2,7 @@
 import { z } from 'zod';
 
 export const updateTaskSchema = z.object({
-  title: z.string().max(100),
+  title: z.string().max(100).optional(),
   description: z.string().max(255).optional(),
   completed: z.boolean().optional(),
 });

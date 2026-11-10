@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common"
 import { TasksService } from "./tasks.service.js";
 import { type CreateTaskDto, createTaskSchema } from "./dto/create-task.dto.js";
 import { updateTaskSchema, type UpdateTaskDto } from "./dto/update-task.dto.js";
+import { taskIdSchema } from "./dto/task-id.dto.js";
 
 @Controller("tasks")
 export class TasksController {
@@ -20,12 +21,12 @@ export class TasksController {
     }
 
     @Put(":id")
-    updateTask(@Param("id") id: number, @Body({schema: updateTaskSchema}) { title, description, completed }: UpdateTaskDto) {
+    updateTask(@Param("id", { schema: taskIdSchema }) id: number, @Body({schema: updateTaskSchema}) { title, description, completed }: UpdateTaskDto) {
         return this.tasksService.updateTask(id, title, description, completed);
     }
 
     @Delete(":id")
-    deleteTask(@Param("id") id: number) {
+    deleteTask(@Param("id", { schema: taskIdSchema }) id: number) {
         return this.tasksService.deleteTask(id);
     }
 
